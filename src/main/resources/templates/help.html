@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Url Shortener</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        .code-font, code, h3 {
+            font-family: 'Courier New', monospace;
+        }
+        .indent {
+            margin-left: 30px;
+        }
+
+        .indent-l2 {
+            margin-left: 50px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Welcome to the URL shortener app</h1>
+    <p>Since you were able to get here, the application works correctly. Anyway let's introduce the steps needed for running
+        the app.</p>
+    <h2>Prerequisites</h2>
+    <p>Following needs to be installed on your machine:</p>
+    <ul>
+        <li>Java 11 or higher</li>
+        <li>Git</li>
+    </ul>
+    <h2>Run</h2>
+    This guide describe steps to run the application on your local machine.
+    <ul>
+        <li>clone the repository with Git from remote location</li>
+        <li>find the .jar file inside your local cloned project in directory <span class="code-font">/package</span></li>
+        <li>run the .jar file using <span class="code-font">java -jar &lt;filename&gt;.jar</span></li>
+    </ul>
+    <p>After that the application is ran in your JVM.</p>
+    <h2>Usage</h2>
+    The application is accesible through a browser on address <a href="http://localhost:8080">localhost:8080</a>.
+    In order to get to this page you used <a href="http://localhost:8080/help">localhost:8080/help</a>
+    <p>You can use the application throug this API:</p>
+<!--    <ul>-->
+        <div class="indent">
+            <h3>POST /account</h3>
+            <div class="indent-l2">
+                Creates an account with requested account ID and returns password when account with the ID doesn't exist.
+                <h4>Request:</h4>
+                <pre>
+                    <code>
+                    {
+                        "accountId" : "{yourAccountID}"
+                    }
+                    </code>
+                </pre>
+                <h4>Response:</h4>
+                <pre>
+                    <code>
+                    {
+                        "success": true,
+                        "description": "Account has been successfully created",
+                        "password": "7JQ0UYmX"
+                    }
+                    </code>
+                </pre>
+                Account ID and returned password should be used as basic authorization credentials.
+            </div>
+        </div>
+        <div class="indent">
+            <h3>POST /register</h3>
+            <div class="indent-l2">
+                Registers URL and returns shorten version. Requires basic authorization.
+                <h4>Request:</h4>
+                <pre>
+                    <code>
+                    {
+                        "URL": "https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html",
+                        "redirectType": 301
+                    }
+                    </code>
+                </pre>
+                redirectType is optional field, no need to specify.
+                <h4>Response:</h4>
+                <pre>
+                    <code>
+                    {
+                        "shortUrl": "http://localhost:8080/Sq9x1h"
+                    }
+                    </code>
+                </pre>
+            </div>
+        </div>
+        <div class="indent">
+            <h3>GET /statistic/&lt;accountId&gt;</h3>
+            <div class="indent-l2">
+                Returns statistic of url calls for specific user. Requires basic authorization.
+                <h4>Response:</h4>
+                <pre>
+                    <code>
+                    [
+                        {
+                            "https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html": 2
+                        },
+                        {
+                            "https://wst.tv": 8
+                        },
+                        {
+                            "https://www.nhl.com/": 3
+                        }
+                    ]
+                    </code>
+                </pre>
+            </div>
+        </div>
+        <div class="indent">
+            <h3>GET /&lt;urlId&gt;</h3>
+            <div class="indent-l2">
+                Redirects you to the registered url. Simply GET an shortUrl returned in <span class="code-font">/register</span> call. Requires basic authorization.
+                <h4>Response:</h4>
+                The page content of registered URL.
+            </div>
+        </div>
+        <div class="indent">
+            <h3>GET /help</h3>
+            <div class="indent-l2">
+                This help page.
+            </div>
+        </div>
+        <div class="indent">
+            <h3>GET /h2-console</h3>
+            <div class="indent-l2">
+                Interface for accessing the in-memory database.
+            </div>
+        </div>
+</body>
+</html>
